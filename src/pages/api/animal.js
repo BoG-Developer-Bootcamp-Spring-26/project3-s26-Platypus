@@ -1,4 +1,4 @@
-import { createAnimal, updateAnimal } from "../../../webapp/server/mongodb/actions/animalActions.js";
+import { createAnimal, updateAnimal } from "../../../server/mongodb/actions/animalActions.js";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
