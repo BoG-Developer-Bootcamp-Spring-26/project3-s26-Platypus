@@ -1,3 +1,5 @@
+// creates and deletes accounts
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createUser, deleteUser } from '../../../webapp/server/mongodb/actions/userActions';
 import User from '../../../webapp/server/mongodb/models/user';

@@ -1,3 +1,5 @@
+// verifies if person logging in puts in correct credentials
+
 import { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../../webapp/server/mongodb";
 import User from "../../../../webapp/server/mongodb/models/user";
