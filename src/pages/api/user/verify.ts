@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         return res.status(200).json({
             id: user._id,
-            isAdmin: user.isAdmin
+            admin: user.admin
         }); // whenever the user logs in, their id and admin status is saved for the duration of their stay on the site
     } catch(error) {
         return res.status(500).json({ error: 'There was an error' });

@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const requesterId = req.headers['user-id'];
         const requester = await User.findById(requesterId);
 
-        if (!requester || !requester.isAdmin) {
+        if (!requester || !requester.admin) {
             return res.status(500).json({ error: "Unauthorized"});
         }
         const users = await User.find().select('-password');
