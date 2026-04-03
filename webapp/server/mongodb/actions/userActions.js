@@ -1,3 +1,5 @@
+// contains functions for each part of CRUD (specifically for users)
+
 import connectDB from "..";
 import User from "../models/user";
 import * as argon2 from 'argon2';

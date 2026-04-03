@@ -1,3 +1,5 @@
+// allows you to get all user information, given that you are an admin 
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectDB from '../../../../webapp/server/mongodb';
 import User from '../../../../webapp/server/mongodb/models/user';
