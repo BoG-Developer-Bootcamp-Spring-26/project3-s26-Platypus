@@ -1,7 +1,7 @@
 // contains functions for each part of CRUD (specifically for users)
 
 import connectDB from "..";
-import User from "../models/user";
+import User from "../models/User";
 import * as argon2 from 'argon2';
 
 export async function createUser(data) {

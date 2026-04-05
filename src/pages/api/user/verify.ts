@@ -2,7 +2,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../../webapp/server/mongodb";
-import User from "../../../../webapp/server/mongodb/models/user";
+import User from "../../../../webapp/server/mongodb/models/User";
 import * as argon2 from 'argon2';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
