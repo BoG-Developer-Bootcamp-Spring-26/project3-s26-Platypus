@@ -1,0 +1,44 @@
+import {
+  createTraining,
+  updateTraining,
+  getTrainingByOwner,
+} from "../../../webapp/server/mongodb/actions/trainingActions.js";
+
+export default async function handler(req, res) {
+  if (req.method === "POST") {
+    try {
+      const training = await createTraining(req.body);
+      return res.status(200).json(training);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
+  if (req.method === "PATCH") {
+    try {
+      const { id, ...updateData } = req.body;
+      if (!id) {
+        return res.status(400).json({ error: "Training log id is required" });
+      }
+      const training = await updateTraining(id, updateData);
+      return res.status(200).json(training);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+  }
+
+  if (req.method === "GET") {
+    try {
+      const { ownerId } = req.query;
+      if (!ownerId) {
+        return res.status(400).json({ error: "ownerId query param is required" });
+      }
+      const trainings = await getTrainingByOwner(ownerId);
+      return res.status(200).json(trainings);
+    } catch (err) {
+      return res.status(500).json({ error: err.message });
+    }
+  }
+
+  return res.status(405).json({ error: "Method not allowed" });
+}
