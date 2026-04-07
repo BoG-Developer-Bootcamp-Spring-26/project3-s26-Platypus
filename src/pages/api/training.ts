@@ -1,15 +1,16 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import {
   createTraining,
   updateTraining,
   getTrainingByOwner,
 } from "../../../webapp/server/mongodb/actions/trainingActions.js";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     try {
       const training = await createTraining(req.body);
       return res.status(200).json(training);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).json({ error: err.message });
     }
   }
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
       }
       const training = await updateTraining(id, updateData);
       return res.status(200).json(training);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).json({ error: err.message });
     }
   }
@@ -30,12 +31,12 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const { ownerId } = req.query;
-      if (!ownerId) {
+      if (!ownerId || typeof ownerId !== "string") {
         return res.status(400).json({ error: "ownerId query param is required" });
       }
       const trainings = await getTrainingByOwner(ownerId);
       return res.status(200).json(trainings);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(500).json({ error: err.message });
     }
   }
