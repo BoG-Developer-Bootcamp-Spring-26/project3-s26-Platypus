@@ -1,11 +1,12 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createAnimal, updateAnimal } from "../../../webapp/server/mongodb/actions/animalActions.js";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     try {
       const animal = await createAnimal(req.body);
       return res.status(201).json(animal);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).json({ error: err.message });
     }
   }
@@ -16,7 +17,7 @@ export default async function handler(req, res) {
       const animal = await updateAnimal(id, data);
       if (!animal) return res.status(404).json({ error: "Animal not found" });
       return res.status(200).json(animal);
-    } catch (err) {
+    } catch (err: any) {
       return res.status(400).json({ error: err.message });
     }
   }
