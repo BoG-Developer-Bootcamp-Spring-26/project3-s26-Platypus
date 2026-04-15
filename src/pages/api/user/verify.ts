@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(500).json({ error: 'Invalid Username/Password'} );
+            return res.status(500).json({ error: 'Invalid Username'} );
         }
         const isPassValid = await argon2.verify(user.password, password);
         if (!isPassValid) {
