@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import { useUser } from "@/hooks/useUser";
+import CornerDecoration from "@/components/CornerDecoration";
 
 export default function SignUp() {
     const router = useRouter();
@@ -44,56 +45,89 @@ export default function SignUp() {
     };
 
     return (
-    <div >
-      <h1>Create Account</h1>
-      
-      <form onSubmit={handleSignUp}>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <label>
-          <input
-            type="checkbox"
-            checked={isAdmin}
-            onChange={(e) => setIsAdmin(e.target.checked)}
-          />
-          Admin access
-        </label>
+    <div className="relative flex flex-col min-h-screen bg-white">
+        <main className="flex grow flex-col items-center justify-center z-10 px-4">
+            <div className="w-full flex flex-col items-center" style={{ maxWidth: '43.8125rem' }}>
+                <h1 className="font-bold text-center mb-8" style={{ fontSize: '3.5rem', lineHeight: '1.34' }}>Create Account</h1>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        
-        <button type="submit">Sign up</button>
-      </form>
+                <form onSubmit={handleSignUp} className="w-full flex flex-col" style={{ gap: '1rem' }}>
+                    <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full bg-transparent outline-none placeholder-gray-500"
+                    style={{ borderBottom: '2.5px solid #D21312', padding: '0.5rem 0.25rem', fontSize: '1rem', color: '#1a1a1a' }}
+                    required
+                    />
+                    <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-transparent outline-none placeholder-gray-500"
+                    style={{ borderBottom: '2.5px solid #D21312', padding: '0.5rem 0.25rem', fontSize: '1rem', color: '#1a1a1a' }}
+                    required
+                    />
+                    <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full bg-transparent outline-none placeholder-gray-500"
+                    style={{ borderBottom: '2.5px solid #D21312', padding: '0.5rem 0.25rem', fontSize: '1rem', color: '#1a1a1a' }}
+                    required
+                    />
+                    <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full bg-transparent outline-none placeholder-gray-500"
+                    style={{ borderBottom: '2.5px solid #D21312', padding: '0.5rem 0.25rem', fontSize: '1rem', color: '#1a1a1a' }}
+                    required
+                    />
 
-      {/* Link to Log In Page */}
-      <p>
-        Already have an account? <Link href="/">Sign in</Link>
-      </p>
-    </div>
-  );
+                    <label className="flex items-center gap-2 cursor-pointer" style={{ fontSize: '1rem' }}>
+                    <input
+                        type="checkbox"
+                        checked={isAdmin}
+                        onChange={(e) => setIsAdmin(e.target.checked)}
+                        className="w-4 h-4 accent-[#D21312]"
+                    />
+                    Admin access
+                    </label>
+
+                    {error && <p className="text-center font-bold" style={{ color: '#D21312' }}>{error}</p>}
+
+                    <button
+                    type="submit"
+                    className="w-full text-white font-bold transition-opacity hover:opacity-90 active:opacity-80"
+                    style={{ backgroundColor: '#D21312', height: '4.375rem', borderRadius: '1.25rem', fontSize: '1.125rem', marginTop: '0.5rem' }}
+                    >
+                    Sign up
+                    </button>
+
+                    <div
+                    className="text-center"
+                    style={{ fontSize: '1rem', height: '2.3125rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1a1a1a' }}
+                    >
+                        Already have an account?{' '}
+                        <Link href="/" className="font-bold hover:underline ml-1" style={{ color: '#1a1a1a' }}>Sign in</Link>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer
+            className="text-center z-10"
+            style={{ color: '#6b7280', paddingBottom: '1.5rem', paddingTop: '1rem', fontSize: '0.875rem', lineHeight: '1.6' }}
+        >
+            <p>Made with ♡ by Long Lam</p>
+            <p>© 2023 BOG Developer Bootcamp. All rights reserved.</p>
+        </footer>
+
+        <CornerDecoration />
+</div>
+);
 }
