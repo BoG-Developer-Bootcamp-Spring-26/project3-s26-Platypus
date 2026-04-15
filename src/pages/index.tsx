@@ -1,3 +1,4 @@
+import CornerDecoration from "@/components/CornerDecoration";
 export default function Home() {
-  return <div>Animal Training App</div>;
+  return <div><CornerDecoration/></div>;
 }
