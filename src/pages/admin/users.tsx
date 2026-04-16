@@ -1,0 +1,104 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useUser } from '@/hooks/useUser';
+import Sidebar from '@/components/Sidebar';
+import TitleBar from '@/components/TitleBar';
+import UserCard from '@/components/UserCard';
+
+interface UserData {
+    id: string;
+    fullName: string;
+    admin: boolean;
+}
+
+export default function AdminUsersPage() {
+    const router = useRouter();
+    const { user } = useUser();
+    const [users, setUsers] = useState<UserData[]>([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        async function fetchAllUsers() {
+            const userString = localStorage.getItem("user");
+            if (!userString) {
+                router.push('/');
+                return; // we only want to allow access if they truly exist (nothings stopping them from just typing /admin/users after URL and accessing manually)
+            }
+            const parsedUser = JSON.parse(userString);
+            try {
+                const response = await fetch('/api/admin/users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user-id': parsedUser.id
+                    }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    setUsers(data);
+                } else {
+                    setError(data.error);
+                }
+            } catch (err) {
+                setError("A network error occurred.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllUsers();
+
+    }, [user, router]);
+
+    const filteredUsers = users.filter((u) =>
+        u.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return (
+        <div className="flex h-screen bg-white">
+            <Sidebar />
+            <div className="flex flex-col grow w-full overflow-hidden">
+                <TitleBar 
+                    showSearch={true}
+                    onSearch={(query) => setSearchQuery(query)}
+                />
+                <main className="grow overflow-y-auto p-8 border-t border-gray-200">
+                    <div className="max-w-[1300px] mx-auto">
+                        
+                        <h2 className="text-2xl font-bold text-gray-500 mb-8 pb-4 border-b border-gray-200">
+                            All users
+                        </h2>
+
+                        {/* Loading and Error States */}
+                        {loading && <p className="text-gray-500 font-medium text-lg">Loading users...</p>}
+                        {error && <p className="text-[#D21312] font-bold text-lg">{error}</p>}
+
+                        {/* The Grid of User Cards */}
+                        {!loading && !error && (
+                            <div className="flex flex-wrap gap-6">
+                                {filteredUsers.length > 0 ? (
+                                    filteredUsers.map((u) => (
+                                        <UserCard 
+                                            key={u.id}
+                                            fullName={u.fullName}
+                                            isAdmin={u.admin}
+                                        />
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500 text-lg w-full">
+                                        No users found matching "{searchQuery}".
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                    </div>
+                </main>
+            </div>
+        </div>
+    )
+
+
+}
