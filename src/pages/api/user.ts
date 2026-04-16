@@ -5,7 +5,6 @@ import { createUser, deleteUser } from '../../../webapp/server/mongodb/actions/u
 import User from '../../../webapp/server/mongodb/models/User';
 import * as argon2 from 'argon2';
 import connectDB from '../../../webapp/server/mongodb';
-import { signToken } from '../../lib/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
@@ -16,18 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(400).json({ error: 'All required user information is not present.' });
             }
             const newUser = await createUser(req.body);
-
-            const token = await signToken({
-                id: newUser._id.toString(),
-                fullName: newUser.fullName,
-                isAdmin: newUser.admin,
-            });
-            const isProduction = process.env.NODE_ENV === 'production';
-            res.setHeader(
-                'Set-Cookie',
-                `token=${token}; HttpOnly; Path=/; Max-Age=${7 * 24 * 60 * 60}; SameSite=Strict${isProduction ? '; Secure' : ''}`
-            );
-
             return res.status(200).json({ message: 'User was created successfully', user: newUser });
         } catch(err) {
             if (err instanceof Error) {

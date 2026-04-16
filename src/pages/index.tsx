@@ -23,11 +23,12 @@ export default function Login() {
       });
 
       if (response.ok) {
-        const meRes = await fetch('/api/user/me');
-        if (meRes.ok) {
-          const data = await meRes.json();
-          saveUser({ id: data.id, fullName: data.fullName, isAdmin: data.isAdmin });
-        }
+        const data = await response.json();
+        saveUser({
+          id: data.id,
+          fullName: data.fullName,
+          isAdmin: data.admin
+        });
         router.push('/training');
       } else {
         const r = await response.json();

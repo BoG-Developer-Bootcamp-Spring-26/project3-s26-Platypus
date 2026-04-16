@@ -10,18 +10,19 @@ export function useUser() {
   const [user, setUser] = useState<UserSession | null>(null);
 
   useEffect(() => {
-    fetch('/api/user/me')
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => setUser(data))
-      .catch(() => setUser(null));
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
   }, []);
 
   function saveUser(u: UserSession) {
+    localStorage.setItem("user", JSON.stringify(u));
     setUser(u);
   }
 
-  async function clearUser() {
-    await fetch('/api/user/logout', { method: 'POST' });
+  function clearUser() {
+    localStorage.removeItem("user");
     setUser(null);
   }
 
