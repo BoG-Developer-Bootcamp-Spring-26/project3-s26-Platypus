@@ -110,3 +110,25 @@ export async function getTrainingByOwner(ownerId) {
     .sort({ date: -1 });
   return trainings;
 }
+
+export async function deleteTraining(id) {
+  await connectDB();
+
+  const training = await Training.findById(id);
+  if (!training) {
+    throw new Error("Training log not found");
+  }
+
+  const hours = Number(training.hours);
+  const animalId = training.animal;
+
+  await Training.findByIdAndDelete(id);
+
+  const animal = await Animal.findById(animalId);
+  if (animal) {
+    animal.hoursTrained = Math.max(0, animal.hoursTrained - hours);
+    await animal.save();
+  }
+
+  return { success: true, message: "Training log deleted" };
+}
