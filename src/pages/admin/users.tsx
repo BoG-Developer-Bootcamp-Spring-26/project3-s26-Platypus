@@ -57,27 +57,30 @@ export default function AdminUsersPage() {
     );
 
     return (
-        <div className="flex h-screen bg-white">
-            <Sidebar />
-            <div className="flex flex-col grow w-full overflow-hidden">
+        <div className="flex flex-col h-screen bg-white overflow-hidden">
+            <div className="w-full shrink-0 z-20">
                 <TitleBar 
                     showSearch={true}
                     onSearch={(query) => setSearchQuery(query)}
                 />
-                <main className="grow overflow-y-auto p-8 border-t border-gray-200">
-                    <div className="max-w-[1300px] mx-auto">
-                        
-                        <h2 className="text-2xl font-bold text-gray-500 mb-8 pb-4 border-b border-gray-200">
+            </div>
+
+            <div className="flex flex-1 overflow-hidden w-full">
+                <Sidebar />
+                
+                <main className="flex-1 overflow-y-auto bg-white border-t border-gray-200">
+                    <div className="w-full border-b border-gray-200 px-8 pt-8 pb-4">
+                        <h2 className="text-xl font-bold text-gray-500 text-left">
                             All users
                         </h2>
-
-                        {/* Loading and Error States */}
+                    </div>
+                    
+                    <div className="max-w-[1300px] mx-auto p-8">
                         {loading && <p className="text-gray-500 font-medium text-lg">Loading users...</p>}
                         {error && <p className="text-[#D21312] font-bold text-lg">{error}</p>}
 
-                        {/* The Grid of User Cards */}
                         {!loading && !error && (
-                            <div className="flex flex-wrap gap-6">
+                            <div className="flex flex-wrap justify-center gap-6">
                                 {filteredUsers.length > 0 ? (
                                     filteredUsers.map((u) => (
                                         <UserCard 
@@ -87,18 +90,17 @@ export default function AdminUsersPage() {
                                         />
                                     ))
                                 ) : (
-                                    <p className="text-gray-500 text-lg w-full">
+                                    <p className="text-gray-500 text-lg w-full text-center">
                                         No users found matching "{searchQuery}".
                                     </p>
                                 )}
                             </div>
                         )}
-
                     </div>
                 </main>
             </div>
         </div>
-    )
+    );
 
 
 }

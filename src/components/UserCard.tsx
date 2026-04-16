@@ -22,6 +22,12 @@ export default function UserCard({ fullName, isAdmin }: UserCardProps) {
                 <h3 className="text-[20px] font-bold text-gray-900 leading-tight mb-1">
                 {fullName}
                 </h3>
+
+                <p className="text-[15px] font-medium">
+                    <span className={isAdmin ? "text-[#D21312]" : "text-gray-400"}>
+                        {isAdmin ? 'Admin' : 'User'}
+                    </span>
+                </p>
             </div>
         </div>
   );
