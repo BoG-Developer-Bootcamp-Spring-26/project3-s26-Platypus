@@ -32,11 +32,11 @@ export default function SignUp() {
             const data = await response.json();
             if (response.ok) {
                 saveUser({
-                    id: data.user_id,
+                    id: data.user._id,
                     fullName: data.user.fullName,
                     isAdmin: data.user.admin
                 });
-                router.push('/animals'); // ** PUSH TO TRAINING PART
+                router.push('/training');
             } else {
                 setError(data.error || "Failed to create an account.");
             }

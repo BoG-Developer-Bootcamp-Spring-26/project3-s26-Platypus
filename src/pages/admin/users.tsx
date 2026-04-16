@@ -6,7 +6,7 @@ import TitleBar from '@/components/TitleBar';
 import UserCard from '@/components/UserCard';
 
 interface UserData {
-    id: string;
+    _id: string;
     fullName: string;
     admin: boolean;
 }
@@ -32,7 +32,7 @@ export default function AdminUsersPage() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'user-id': parsedUser.id
+                        'user-id': parsedUser.id || parsedUser._id || parsedUser.user?.id || parsedUser.user?._id
                     }
                 });
                 const data = await response.json();
@@ -50,7 +50,7 @@ export default function AdminUsersPage() {
 
         fetchAllUsers();
 
-    }, [user, router]);
+    }, [router]);
 
     const filteredUsers = users.filter((u) =>
         u.fullName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -84,7 +84,7 @@ export default function AdminUsersPage() {
                                 {filteredUsers.length > 0 ? (
                                     filteredUsers.map((u) => (
                                         <UserCard 
-                                            key={u.id}
+                                            key={u._id}
                                             fullName={u.fullName}
                                             isAdmin={u.admin}
                                         />

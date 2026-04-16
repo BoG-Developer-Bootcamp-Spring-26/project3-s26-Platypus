@@ -29,7 +29,7 @@ export default function Login() {
           fullName: data.fullName,
           isAdmin: data.admin
         });
-        router.push('/animals'); // ***ROUTE THIS TO TRAINING LOGS PAGE***
+        router.push('/training');
       } else {
         const r = await response.json();
         if (r.error === "Invalid Username") {
