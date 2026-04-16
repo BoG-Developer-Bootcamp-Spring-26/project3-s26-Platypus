@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/useUser';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import CornerDecoration from '@/components/CornerDecoration';
 import TitleBar from '@/components/TitleBar';
@@ -23,12 +23,11 @@ export default function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        saveUser({
-          id: data.id,
-          fullName: data.fullName,
-          isAdmin: data.admin
-        });
+        const meRes = await fetch('/api/user/me');
+        if (meRes.ok) {
+          const data = await meRes.json();
+          saveUser({ id: data.id, fullName: data.fullName, isAdmin: data.isAdmin });
+        }
         router.push('/training');
       } else {
         const r = await response.json();
