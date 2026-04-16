@@ -119,7 +119,7 @@ export default function TrainingPage() {
     <div className="flex min-h-screen bg-white">
       <Sidebar />
 
-      <main className="flex-1 px-12 py-10">
+      <main className="flex-1 px-12 pt-4 pb-10">
         {/* Top bar with search */}
         <div className="flex items-center justify-end mb-10">
             <div className="w-full max-w-md">
