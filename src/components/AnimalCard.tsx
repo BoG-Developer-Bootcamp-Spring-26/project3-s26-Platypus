@@ -2,7 +2,7 @@ type Animal = {
   _id: string;
   name: string;
   breed: string;
-  owner: { fullName: string } | string;
+  owner: { _id?: string; fullName: string } | string;
   hoursTrained: number;
   profilePicture: string;
 };
@@ -13,10 +13,12 @@ type Props = {
 
 export default function AnimalCard({ animal }: Props) {
   const ownerName = typeof animal.owner === "object" ? animal.owner.fullName : animal.owner;
+  const ownerInitial = ownerName ? ownerName.charAt(0).toUpperCase() : "?";
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden w-64">
-      <div className="h-44 w-full bg-gray-100 relative">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden w-56">
+      {/* Photo with owner avatar overlapping bottom-left */}
+      <div className="relative h-48 w-full bg-gray-100">
         {animal.profilePicture ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -27,12 +29,23 @@ export default function AnimalCard({ animal }: Props) {
         ) : (
           <div className="flex items-center justify-center h-full text-gray-300 text-4xl">?</div>
         )}
+        {/* Owner avatar overlapping bottom-left */}
+        <div
+          className="absolute -bottom-4 left-3 flex items-center justify-center rounded-full text-white font-bold text-sm border-2 border-white"
+          style={{ backgroundColor: "#D21312", width: "2rem", height: "2rem" }}
+        >
+          {ownerInitial}
+        </div>
       </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900">{animal.name}</h3>
-        <p className="text-sm text-gray-500">{animal.breed}</p>
-        <p className="text-sm text-gray-500 mt-1">Owner: {ownerName}</p>
-        <p className="text-sm text-gray-700 mt-1 font-medium">{animal.hoursTrained} hrs trained</p>
+
+      {/* Card info */}
+      <div className="pt-6 px-3 pb-3">
+        <p className="text-sm font-semibold text-gray-900 truncate">
+          {animal.name} · {animal.breed}
+        </p>
+        <p className="text-xs text-gray-500 mt-0.5 truncate">
+          {ownerName} · Trained: {animal.hoursTrained} hours
+        </p>
       </div>
     </div>
   );

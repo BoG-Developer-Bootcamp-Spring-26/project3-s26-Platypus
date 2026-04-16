@@ -15,7 +15,7 @@ export default function Sidebar() {
   const isActive = (path: string) => router.pathname === path;
 
   return (
-    <aside className="flex flex-col w-48 h-full bg-white border-r border-gray-200 py-6 px-4">
+    <aside className="flex flex-col w-48 min-h-screen bg-white border-r border-gray-200 py-6 px-4">
 
       <nav className="flex flex-col gap-1 flex-1">
         <Link

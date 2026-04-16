@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import TopBar from "../../components/TopBar";
 import AnimalCard from "../../components/AnimalCard";
-import SearchBar from "../../components/SearchBar";
 
 type Animal = {
   _id: string;
@@ -23,7 +23,8 @@ export default function AdminAnimalsPage() {
       try {
         const res = await fetch("/api/admin/animals");
         const data = await res.json();
-        setAnimals(data);
+        if (!res.ok) throw new Error(data.error || "Unknown error");
+        setAnimals(Array.isArray(data) ? data : []);
       } catch {
         setError("Failed to load animals.");
       } finally {
@@ -38,29 +39,32 @@ export default function AdminAnimalsPage() {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <TopBar onSearch={setSearch} />
 
-      <main className="flex-1 p-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">All Animals</h1>
-          <SearchBar onSearch={setSearch} placeholder="Search by name..." />
-        </div>
+      <div className="flex flex-1">
+        <Sidebar />
 
-        {loading ? (
-          <p className="text-gray-400 text-sm">Loading...</p>
-        ) : error ? (
-          <p className="text-red-500 text-sm">{error}</p>
-        ) : filtered.length === 0 ? (
-          <p className="text-gray-400 text-sm">No animals found.</p>
-        ) : (
-          <div className="flex flex-wrap gap-6">
-            {filtered.map((animal) => (
-              <AnimalCard key={animal._id} animal={animal} />
-            ))}
+        <main className="flex-1 px-12 pt-6 pb-10">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+            <h1 className="text-lg text-gray-700">All Animals</h1>
           </div>
-        )}
-      </main>
+
+          {loading ? (
+            <p className="text-gray-400 text-sm">Loading...</p>
+          ) : error ? (
+            <p className="text-red-500 text-sm">{error}</p>
+          ) : filtered.length === 0 ? (
+            <p className="text-gray-400 text-sm">No animals found.</p>
+          ) : (
+            <div className="flex flex-wrap gap-6">
+              {filtered.map((animal) => (
+                <AnimalCard key={animal._id} animal={animal} />
+              ))}
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

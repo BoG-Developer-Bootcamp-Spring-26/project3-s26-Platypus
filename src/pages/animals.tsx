@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Sidebar from "../components/Sidebar";
+import TopBar from "../components/TopBar";
 import AnimalCard from "../components/AnimalCard";
-import SearchBar from "../components/SearchBar";
 import { useUser } from "../hooks/useUser";
 
 type Animal = {
@@ -39,7 +38,8 @@ export default function AnimalsPage() {
     try {
       const res = await fetch("/api/admin/animals");
       const data = await res.json();
-      setAnimals(data);
+      if (!res.ok) throw new Error(data.error || "Unknown error");
+      setAnimals(Array.isArray(data) ? data : []);
     } catch {
       setError("Failed to load animals.");
     } finally {
@@ -91,23 +91,24 @@ export default function AnimalsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <TopBar onSearch={setSearch} />
 
-      <main className="flex-1 p-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">My Animals</h1>
-          <div className="flex items-center gap-4">
-            <SearchBar onSearch={setSearch} placeholder="Search by name..." />
+      <div className="flex flex-1">
+        <Sidebar />
+
+        <main className="flex-1 px-12 pt-6 pb-10">
+          {/* Page header */}
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+            <h1 className="text-lg text-gray-700">Animals</h1>
             <button
               onClick={() => { setShowForm(true); setError(""); }}
-              className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition"
+              className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition"
             >
-              <Image src="/images/createNewLogo.png" alt="Create" width={16} height={16} />
-              Add Animal
+              <span className="inline-flex items-center justify-center w-5 h-5 border border-gray-300 rounded text-gray-500">+</span>
+              Create new
             </button>
           </div>
-        </div>
 
         {/* Create form */}
         {showForm && (
@@ -180,7 +181,8 @@ export default function AnimalsPage() {
             ))}
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

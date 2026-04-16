@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import TopBar from "../components/TopBar";
 import TrainingCard from "../components/TrainingCard";
-import SearchBar from "../components/SearchBar";
 import { useUser } from "../hooks/useUser";
 
 type TrainingLog = {
@@ -43,7 +43,8 @@ export default function TrainingPage() {
     try {
       const res = await fetch(`/api/training?ownerId=${user.id}`);
       const data = await res.json();
-      setLogs(data);
+      if (!res.ok) throw new Error(data.error || "Unknown error");
+      setLogs(Array.isArray(data) ? data : []);
     } catch {
       setError("Failed to load training logs.");
     } finally {
@@ -116,18 +117,14 @@ export default function TrainingPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-white">
-      <Sidebar />
+    <div className="flex flex-col min-h-screen bg-white">
+      <TopBar onSearch={setSearch} />
 
-      <main className="flex-1 px-12 pt-4 pb-10">
-        {/* Top bar with search */}
-        <div className="flex items-center justify-end mb-10">
-            <div className="w-full max-w-md">
-                <SearchBar onSearch={setSearch} placeholder="Search" />
-            </div>
-        </div>
+      <div className="flex flex-1">
+        <Sidebar />
 
-        {/* Page header */}
+        <main className="flex-1 px-12 pt-6 pb-10">
+          {/* Page header */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
           <h1 className="text-lg text-gray-700">Training logs</h1>
           <button
@@ -214,7 +211,8 @@ export default function TrainingPage() {
             ))}
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import TopBar from "../../components/TopBar";
 import TrainingCard from "../../components/TrainingCard";
-import SearchBar from "../../components/SearchBar";
 
 type TrainingLog = {
   _id: string;
@@ -24,7 +24,8 @@ export default function AdminTrainingPage() {
       try {
         const res = await fetch("/api/admin/training");
         const data = await res.json();
-        setLogs(data);
+        if (!res.ok) throw new Error(data.error || "Unknown error");
+        setLogs(Array.isArray(data) ? data : []);
       } catch {
         setError("Failed to load training logs.");
       } finally {
@@ -39,14 +40,16 @@ export default function AdminTrainingPage() {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <TopBar onSearch={setSearch} />
 
-      <main className="flex-1 p-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">All Training Logs</h1>
-          <SearchBar onSearch={setSearch} placeholder="Search by title..." />
-        </div>
+      <div className="flex flex-1">
+        <Sidebar />
+
+        <main className="flex-1 px-12 pt-6 pb-10">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100">
+            <h1 className="text-lg text-gray-700">All Training Logs</h1>
+          </div>
 
         {loading ? (
           <p className="text-gray-400 text-sm">Loading...</p>
@@ -61,7 +64,8 @@ export default function AdminTrainingPage() {
             ))}
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
