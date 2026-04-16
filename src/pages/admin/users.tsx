@@ -21,20 +21,23 @@ export default function AdminUsersPage() {
 
     useEffect(() => {
         async function fetchAllUsers() {
-            const userString = localStorage.getItem("user");
-            if (!userString) {
-                router.push('/');
-                return; // we only want to allow access if they truly exist (nothings stopping them from just typing /admin/users after URL and accessing manually)
-            }
-            const parsedUser = JSON.parse(userString);
             try {
+                const authResponse = await fetch('/api/user/me');
+                if (!authResponse.ok) {
+                    router.push('/');
+                    return; 
+                }
+                
+                const parsedUser = await authResponse.json();
+                
                 const response = await fetch('/api/admin/users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'user-id': parsedUser.id || parsedUser._id || parsedUser.user?.id || parsedUser.user?._id
+                        'user-id': parsedUser.id || parsedUser._id || ''
                     }
                 });
+                
                 const data = await response.json();
                 if (response.ok) {
                     setUsers(data);
@@ -49,7 +52,7 @@ export default function AdminUsersPage() {
         };
 
         fetchAllUsers();
-
+    // Only ONE closing bracket here now!
     }, [router]);
 
     const filteredUsers = users.filter((u) =>
@@ -101,6 +104,4 @@ export default function AdminUsersPage() {
             </div>
         </div>
     );
-
-
 }
