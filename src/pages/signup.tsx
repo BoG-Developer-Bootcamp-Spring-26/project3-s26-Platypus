@@ -36,7 +36,7 @@ export default function SignUp() {
                     fullName: data.user.fullName,
                     isAdmin: data.user.admin
                 });
-                router.push('/animals'); // ** PUSH TO TRAINING PART
+                router.push('/training');
             } else {
                 setError(data.error || "Failed to create an account.");
             }
