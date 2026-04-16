@@ -112,7 +112,7 @@ export default function Login() {
             )}
             <button
               type="submit"
-              className="w-full text-white font-bold transition-opacity hover:opacity-90 active:opacity-80"
+              className="w-full text-white font-bold transition-opacity hover:opacity-90 active:opacity-80 cursor-pointer"
               style={{
                 backgroundColor: '#D21312',
                 height: '4.375rem',

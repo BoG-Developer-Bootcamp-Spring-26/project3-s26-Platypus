@@ -104,7 +104,7 @@ export default function AnimalsPage() {
               onClick={() => { setShowForm(true); setError(""); }}
               className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition"
             >
-              <span className="inline-flex items-center justify-center w-5 h-5 border border-gray-300 rounded text-gray-500">+</span>
+              <span className="inline-flex cursor-pointer items-center justify-center w-5 h-5 border border-gray-300 rounded text-gray-500">+</span>
               Create new
             </button>
           </div>

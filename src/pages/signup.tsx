@@ -104,7 +104,7 @@ export default function SignUp() {
 
                     <button
                     type="submit"
-                    className="w-full text-white font-bold transition-opacity hover:opacity-90 active:opacity-80"
+                    className="w-full text-white cursor-pointer font-bold transition-opacity hover:opacity-90 active:opacity-80"
                     style={{ backgroundColor: '#D21312', height: '4.375rem', borderRadius: '1.25rem', fontSize: '1.8rem', marginTop: '0.5rem' }}
                     >
                     Sign up
