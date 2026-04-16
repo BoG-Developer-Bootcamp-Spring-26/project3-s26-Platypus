@@ -32,7 +32,7 @@ export default function SignUp() {
             const data = await response.json();
             if (response.ok) {
                 saveUser({
-                    id: data.user_id,
+                    id: data.user._id,
                     fullName: data.user.fullName,
                     isAdmin: data.user.admin
                 });
