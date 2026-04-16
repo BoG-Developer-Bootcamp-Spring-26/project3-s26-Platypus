@@ -91,7 +91,7 @@ export default function Sidebar() {
         </div>
       )}
 
-      <aside className="flex flex-col w-48 min-h-screen bg-white border-r border-gray-200 py-6 px-4">
+      <aside className="flex flex-col w-48 h-full bg-white border-r border-gray-200 py-6 px-4">
         <nav className="flex flex-col gap-1 flex-1">
           <Link
             href="/training"
@@ -125,10 +125,10 @@ export default function Sidebar() {
 
           {user?.isAdmin && (
             <>
-              <div className="mt-4 mb-1 text-xs font-semibold text-gray-800 px-3">
+              <div className="border-t border-gray-200 mt-4 mb-2" />
+              <div className="text-xs font-semibold text-gray-800 px-3 mb-1 text-center">
                 Admin access
               </div>
-              <div className="border-t border-gray-200 mb-2" />
 
               <Link
                 href="/admin/training"

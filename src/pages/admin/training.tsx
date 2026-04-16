@@ -40,10 +40,9 @@ export default function AdminTrainingPage() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col h-screen overflow-hidden bg-gray-50">
       <TopBar onSearch={setSearch} />
-
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar />
 
         <main className="flex-1 px-12 pt-6 pb-10">

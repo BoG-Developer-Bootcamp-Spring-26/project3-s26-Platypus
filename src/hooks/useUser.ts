@@ -10,9 +10,20 @@ export function useUser() {
   const [user, setUser] = useState<UserSession | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      setUser(JSON.parse(stored));
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      try {
+        const parsed = JSON.parse(userString);
+        const raw = parsed.user || parsed; 
+        
+        setUser({
+          id: raw.id || raw._id,
+          fullName: raw.fullName || "User",
+          isAdmin: raw.admin === true || raw.isAdmin === true
+        });
+      } catch (e) {
+        setUser(null);
+      }
     }
   }, []);
 
