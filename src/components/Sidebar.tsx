@@ -47,49 +47,6 @@ export default function Sidebar() {
   const isActive = (path: string) => router.pathname === path;
 
   return (
-<<<<<<< HEAD
-    <aside className="flex flex-col w-48 min-h-screen bg-white border-r border-gray-200 py-6 px-4">
-
-      <nav className="flex flex-col gap-1 flex-1">
-        <Link
-          href="/training"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-            isActive("/training")
-              ? "bg-[#D21312] text-white"
-              : "text-gray-500 hover:bg-gray-100"
-          }`}
-        >
-          <Image
-            src={isActive("/training") ? "/images/activeTrainingLogo.png" : "/images/inactiveTrainingLogs.png"}
-            alt="Training Logs"
-            width={18}
-            height={18}
-          />
-          Training logs
-        </Link>
-
-        <Link
-          href="/animals"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-            isActive("/animals")
-              ? "bg-[#D21312] text-white"
-              : "text-gray-500 hover:bg-gray-100"
-          }`}
-        >
-          <Image
-            src={isActive("/animals") ? "/images/activeAnimalsLogo.png" : "/images/inactiveAnimalLogo.png"}
-            alt="Animals"
-            width={18}
-            height={18}
-          />
-          Animals
-        </Link>
-
-        {user?.isAdmin && (
-          <>
-            <div className="mt-4 mb-1 text-xs font-semibold text-gray-800 px-3">
-              Admin access
-=======
     <>
       {showDeleteScreen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -98,41 +55,32 @@ export default function Sidebar() {
             <p className="text-sm text-gray-600 mb-4">
               This action is permanent. Please confirm your credentials to delete your account.
             </p>
-            
             <div className="space-y-3 mb-4">
-              <input 
-                type="email" 
-                placeholder="Email" 
+              <input
+                type="email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#D21312]"
               />
-              <input 
-                type="password" 
-                placeholder="Password" 
+              <input
+                type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#D21312]"
               />
->>>>>>> 262c2f06ee658f3615d20d3482d630897597b318
             </div>
-
             {error && <p className="text-[#D21312] text-sm font-bold mb-4">{error}</p>}
-
             <div className="flex justify-end gap-3">
-              <button 
-                onClick={() => {
-                  setShowDeleteScreen(false);
-                  setError("");
-                  setEmail("");
-                  setPassword("");
-                }} 
+              <button
+                onClick={() => { setShowDeleteScreen(false); setError(""); setEmail(""); setPassword(""); }}
                 className="px-4 py-2 rounded-lg text-gray-500 hover:bg-gray-100 font-medium text-sm"
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleDeleteAccount} 
+              <button
+                onClick={handleDeleteAccount}
                 disabled={isDeleting}
                 className="px-4 py-2 rounded-lg bg-[#D21312] text-white hover:bg-red-700 font-bold text-sm disabled:opacity-50"
               >
@@ -143,15 +91,12 @@ export default function Sidebar() {
         </div>
       )}
 
-      <aside className="flex flex-col w-48 h-full bg-white border-r border-gray-200 py-6 px-4">
-
+      <aside className="flex flex-col w-48 min-h-screen bg-white border-r border-gray-200 py-6 px-4">
         <nav className="flex flex-col gap-1 flex-1">
           <Link
             href="/training"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-              isActive("/training")
-                ? "bg-[#D21312] text-white"
-                : "text-gray-500 hover:bg-gray-100"
+              isActive("/training") ? "bg-[#D21312] text-white" : "text-gray-500 hover:bg-gray-100"
             }`}
           >
             <Image
@@ -166,9 +111,7 @@ export default function Sidebar() {
           <Link
             href="/animals"
             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-              isActive("/animals")
-                ? "bg-[#D21312] text-white"
-                : "text-gray-500 hover:bg-gray-100"
+              isActive("/animals") ? "bg-[#D21312] text-white" : "text-gray-500 hover:bg-gray-100"
             }`}
           >
             <Image
@@ -190,9 +133,7 @@ export default function Sidebar() {
               <Link
                 href="/admin/training"
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-                  isActive("/admin/training")
-                    ? "bg-[#D21312] text-white"
-                    : "text-gray-500 hover:bg-gray-100"
+                  isActive("/admin/training") ? "bg-[#D21312] text-white" : "text-gray-500 hover:bg-gray-100"
                 }`}
               >
                 <Image
@@ -207,9 +148,7 @@ export default function Sidebar() {
               <Link
                 href="/admin/animals"
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-                  isActive("/admin/animals")
-                    ? "bg-[#D21312] text-white"
-                    : "text-gray-500 hover:bg-gray-100"
+                  isActive("/admin/animals") ? "bg-[#D21312] text-white" : "text-gray-500 hover:bg-gray-100"
                 }`}
               >
                 <Image
@@ -224,9 +163,7 @@ export default function Sidebar() {
               <Link
                 href="/admin/users"
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-                  isActive("/admin/users")
-                    ? "bg-[#D21312] text-white"
-                    : "text-gray-500 hover:bg-gray-100"
+                  isActive("/admin/users") ? "bg-[#D21312] text-white" : "text-gray-500 hover:bg-gray-100"
                 }`}
               >
                 <Image
@@ -251,17 +188,15 @@ export default function Sidebar() {
                 >
                   {user.fullName?.charAt(0).toUpperCase()}
                 </div>
-                <div>
-                  <div className="flex flex-col items-start mb-2">
-                    <p className="text-sm font-semibold text-gray-800 leading-tight">{user.fullName}</p>
-                    <p className="text-xs text-gray-400 mb-1">{user.isAdmin ? "Admin" : "User"}</p>
-                    <button 
-                      onClick={() => setShowDeleteScreen(true)}
-                      className="text-[11px] font-bold text-[#D21312] hover:underline cursor-pointer"
-                    >
+                <div className="flex flex-col items-start mb-2">
+                  <p className="text-sm font-semibold text-gray-800 leading-tight">{user.fullName}</p>
+                  <p className="text-xs text-gray-400 mb-1">{user.isAdmin ? "Admin" : "User"}</p>
+                  <button
+                    onClick={() => setShowDeleteScreen(true)}
+                    className="text-[11px] font-bold text-[#D21312] hover:underline cursor-pointer"
+                  >
                     Delete Account
-                    </button>
-                  </div>
+                  </button>
                 </div>
               </div>
               <button onClick={handleLogout} className="text-gray-400 hover:text-gray-600 p-1 cursor-pointer">
@@ -270,7 +205,6 @@ export default function Sidebar() {
             </div>
           )}
         </div>
-
       </aside>
     </>
   );
