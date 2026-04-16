@@ -21,18 +21,18 @@ export default function SearchBar({ onSearch, placeholder = "Search..." }: Props
   }
 
   return (
-    <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-4 py-2 w-72 shadow-sm">
+    <div className="flex items-center gap-3 bg-white border border-gray-400 rounded-lg px-4 py-3 w-full shadow-sm">
+      <button onClick={() => onSearch(value)} className="shrink-0 flex items-center justify-center">
+        <Image src="/images/searchLogo.png" alt="Search" width={20} height={20} />
+      </button>
       <input
         type="text"
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="flex-1 text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
+        className="flex-1 text-base text-gray-700 placeholder-gray-500 focus:outline-none bg-transparent"
       />
-      <button onClick={() => onSearch(value)} className="shrink-0">
-        <Image src="/images/searchLogo.png" alt="Search" width={18} height={18} />
-      </button>
     </div>
   );
 }

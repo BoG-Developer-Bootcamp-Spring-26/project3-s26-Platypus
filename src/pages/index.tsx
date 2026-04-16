@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/useUser';
 import Link from 'next/link';
 import CornerDecoration from '@/components/CornerDecoration';
+import TitleBar from '@/components/TitleBar';
 
 export default function Login() {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function Login() {
 
   return (
     <div className="relative flex flex-col min-h-screen bg-white">
+      <TitleBar />
       <main className="flex grow flex-col items-center justify-center z-10 px-4">
         <div
           className="w-full flex flex-col items-center"
@@ -115,7 +117,7 @@ export default function Login() {
                 backgroundColor: '#D21312',
                 height: '4.375rem',
                 borderRadius: '1.25rem',
-                fontSize: '1.125rem',
+                fontSize: '1.8rem',
                 marginTop: '1.5rem',
                 letterSpacing: '0.01em',
               }}

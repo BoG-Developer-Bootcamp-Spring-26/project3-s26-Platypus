@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from 'next/link';
 import { useUser } from "@/hooks/useUser";
 import CornerDecoration from "@/components/CornerDecoration";
+import TitleBar from "@/components/TitleBar";
 
 export default function SignUp() {
     const router = useRouter();
@@ -46,8 +47,9 @@ export default function SignUp() {
 
     return (
     <div className="relative flex flex-col min-h-screen bg-white">
+        <TitleBar />
         <main className="flex grow flex-col items-center justify-center z-10 px-4">
-            <div className="w-full flex flex-col items-center" style={{ maxWidth: '43.8125rem' }}>
+            <div className="w-full flex flex-col items-center" style={{ maxWidth: '38.8125rem' }}>
                 <h1 className="font-bold text-center mb-8" style={{ fontSize: '3.5rem', lineHeight: '1.34' }}>Create Account</h1>
 
                 <form onSubmit={handleSignUp} className="w-full flex flex-col" style={{ gap: '1rem' }}>
@@ -103,7 +105,7 @@ export default function SignUp() {
                     <button
                     type="submit"
                     className="w-full text-white font-bold transition-opacity hover:opacity-90 active:opacity-80"
-                    style={{ backgroundColor: '#D21312', height: '4.375rem', borderRadius: '1.25rem', fontSize: '1.125rem', marginTop: '0.5rem' }}
+                    style={{ backgroundColor: '#D21312', height: '4.375rem', borderRadius: '1.25rem', fontSize: '1.8rem', marginTop: '0.5rem' }}
                     >
                     Sign up
                     </button>
